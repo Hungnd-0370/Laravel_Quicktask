@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\TaskStoreRequest;
+use App\Http\Requests\TaskUpdateRequest;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -22,9 +26,9 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view('tasks.create', ['user' => $request->user]);
     }
 
     /**
@@ -33,9 +37,18 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskStoreRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $addTask = DB::table('tasks')->insert(
+            [
+                'name' => $validated['name'],
+                'user_id' => $validated['user'],
+            ]
+        );
+
+        return redirect()->route('users.show', ['user' => $validated['user']]);
     }
 
     /**
@@ -46,7 +59,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('tasks.show', compact('task'));
     }
 
     /**
@@ -57,7 +70,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit', compact('task'));
     }
 
     /**
@@ -67,9 +80,15 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskUpdateRequest $request, Task $task)
     {
-        //
+        $validated = $request->validated();
+
+        $affected = DB::table('tasks')
+            ->where('id', $task->id)
+            ->update(['name' => $validated['name']]);
+
+        return redirect()->route('users.show', ['user' => $task->user_id]);
     }
 
     /**
@@ -80,6 +99,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $deleted = DB::table('tasks')->where('id', $task->id)->delete();
+
+        return redirect()->route('users.show', ['user' => $task->user_id]);
     }
 }

@@ -54,5 +54,9 @@
     "Tasks List": "Danh sách nhiệm vụ",
     "Task Name": "Tên nhiệm vụ",
     "Mod": "Người kiểm duyệt",
-    "Admin": "Quản trị viên"
+    "Admin": "Quản trị viên",
+    "Create new user": "Tạo người dùng mới",
+    "Task Edit": "Chỉnh sửa nhiệm vụ",
+    "Task Detail": "Thông tin chi tiết nhiệm vụ",
+    "Create new task": "Tạo nhiệm vụ mới"
 }

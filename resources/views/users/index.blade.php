@@ -12,8 +12,8 @@
                     {{ __("User List") }}
                 </div>
             </div>
-            <x-primary-button class="mt-4">
-                {{__('Create New User')}}
+            <x-primary-button class="mt-4 mb-4" onclick="location.href='{{ route('users.create') }}'">
+                {{ __('Create new user') }}
             </x-primary-button>
             <table class="table mt-4">
                 <thead>
