@@ -58,6 +58,11 @@
                     <h3 class="font-medium" style="text-transform: capitalize">
                         {{ __("Tasks List") }}
                     </h3>
+                    <a href="{{ route('tasks.create', ['user' => $user->id]) }}">
+                        <x-primary-button class="mt-4 mb-4">
+                            {{ __('Create new task') }}
+                        </x-primary-button>
+                    </a>
                     <table class="table mt-4">
                         <thead>
                             <tr>
